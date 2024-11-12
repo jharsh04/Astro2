@@ -1,18 +1,8 @@
 import { defineConfig } from "tinacms";
 
-// Your hosting provider likely exposes this as an environment variable
-const branch =
-  process.env.GITHUB_BRANCH ||
-  process.env.VERCEL_GIT_COMMIT_REF ||
-  process.env.HEAD ||
-  "main";
-
 export default defineConfig({
-  branch,
-
-  // Get this from tina.io
+  branch: "harsh",
   clientId: process.env.NEXT_PUBLIC_TINA_CLIENT_ID,
-  // Get this from tina.io
   token: process.env.TINA_TOKEN,
 
   build: {
@@ -25,29 +15,32 @@ export default defineConfig({
       publicFolder: "public",
     },
   },
-  // See docs on content modeling for more info on how to setup new content models: https://tina.io/docs/schema/
   schema: {
     collections: [
       {
-        name: "post",
-        label: "Posts",
-        path: "content/posts",
+        name: "Home",
+        label: "Homepage",
+        path: "src/content/blog",
         fields: [
-          {
-            type: "string",
-            name: "title",
-            label: "Title",
-            isTitle: true,
-            required: true,
-          },
-          {
-            type: "rich-text",
-            name: "body",
-            label: "Body",
-            isBody: true,
-          },
+          { type: "string", name: "title", label: "Title", isTitle: true, required: true }, // Added `required: true`
+          { type: "string", name: "description", label: "Description" },
+          { type: "image", name: "heroImage", label: "Hero Image" },
+          { type: "string", name: "ctaText", label: "Note" },
+          { type: "string", name: "ctaLink", label: "Note" },
         ],
       },
+      {
+         name: "About",//that represents name of the template in Tina CMS
+          label: "About Me Page",//That Represents The collection Name in Tina CMS.
+          path:"src/content/About",//represents the path from which tina fetch the value.
+          fields: [
+            { type: "string", name: "title", label: "Title" },
+            { type: "string", name: "description", label: "Description" },
+            { type: "datetime", name: "pubDate", label: "Publication Date" },
+            { type: "image", name: "heroImage", label: "Hero Image" },
+            { type: "rich-text", name: "content", label: "Content" },
+          ],
+      }
     ],
   },
 });
